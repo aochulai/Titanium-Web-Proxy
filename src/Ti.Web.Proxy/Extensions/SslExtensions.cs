@@ -65,15 +65,22 @@ namespace Titanium.Web.Proxy.Extensions
         internal static Task AuthenticateAsClientAsync(this SslStream sslStream, SslClientAuthenticationOptions option,
             CancellationToken token)
         {
-            return sslStream.AuthenticateAsClientAsync(option.TargetHost, option.ClientCertificates,
-                option.EnabledSslProtocols, option.CertificateRevocationCheckMode != X509RevocationMode.NoCheck);
+            return Task.Factory.FromAsync((callback, state) =>
+            sslStream.BeginAuthenticateAsClient(option.TargetHost, option.ClientCertificates, option.EnabledSslProtocols,
+            option.CertificateRevocationCheckMode != X509RevocationMode.NoCheck, callback, state), sslStream.EndAuthenticateAsClient, null);
         }
 
         internal static Task AuthenticateAsServerAsync(this SslStream sslStream, SslServerAuthenticationOptions options,
             CancellationToken token)
         {
-            return sslStream.AuthenticateAsServerAsync(options.ServerCertificate, options.ClientCertificateRequired,
-                options.EnabledSslProtocols, options.CertificateRevocationCheckMode != X509RevocationMode.NoCheck);
+            return Task.Factory.FromAsync((callback, state) =>
+            sslStream.BeginAuthenticateAsServer(options.ServerCertificate, options.ClientCertificateRequired,
+            options.EnabledSslProtocols, options.CertificateRevocationCheckMode != X509RevocationMode.NoCheck, callback, state), sslStream.EndAuthenticateAsServer, null);
+        }
+
+        internal static Task AuthenticateAsServerAsync(this SslStream sslStream, X509Certificate serverCertificate, bool clientCertificateRequired, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
+        {
+            return Task.Factory.FromAsync((callback, state) => sslStream.BeginAuthenticateAsServer(serverCertificate, clientCertificateRequired, enabledSslProtocols, checkCertificateRevocation, callback, state), sslStream.EndAuthenticateAsServer, null);
         }
 #endif
     }

@@ -13,7 +13,7 @@ namespace Titanium.Web.Proxy.Http
             }
             else
             {
-                value = default;
+                value = default(T);
             }
 
             return result;

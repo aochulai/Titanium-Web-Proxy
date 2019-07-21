@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Titanium.Web.Proxy.Helpers;
 using Titanium.Web.Proxy.StreamExtended.BufferPool;
 
 namespace Titanium.Web.Proxy.Extensions
@@ -69,9 +70,9 @@ namespace Titanium.Web.Proxy.Extensions
             var tcs = new TaskCompletionSource<bool>();
             using (cancellationToken.Register(s => ((TaskCompletionSource<bool>)s).TrySetResult(true), tcs))
             {
-                if (task != await Task.WhenAny(task, tcs.Task))
+                if (task != await TaskHelper.WhenAny(task, tcs.Task))
                 {
-                    return default;
+                    return default(T);
                 }
             }
 

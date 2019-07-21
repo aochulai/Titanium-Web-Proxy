@@ -135,7 +135,7 @@ namespace Titanium.Web.Proxy.EventArguments
                 var buffer = bufferPool.GetBuffer(baseStream.BufferSize);
                 try
                 {
-                    int res = await ReadAsync(buffer, 0, buffer.Length);
+                    int res = await Task.Factory.StartNew(() => { return Read(buffer, 0, buffer.Length); });
                     if (res != 0)
                     {
                         throw new Exception("Data received after stream end");

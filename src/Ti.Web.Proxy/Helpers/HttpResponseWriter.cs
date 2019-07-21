@@ -22,7 +22,7 @@ namespace Titanium.Web.Proxy.Helpers
         /// <param name="cancellationToken">Optional cancellation token for this async task.</param>
         /// <returns>The Task.</returns>
         internal async Task WriteResponseAsync(Response response, bool flush = true,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             await WriteResponseStatusAsync(response.HttpVersion, response.StatusCode, response.StatusDescription,
                 cancellationToken);

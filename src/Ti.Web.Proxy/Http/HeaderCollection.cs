@@ -25,19 +25,19 @@ namespace Titanium.Web.Proxy.Http
         {
             headers = new Dictionary<string, HttpHeader>(StringComparer.OrdinalIgnoreCase);
             nonUniqueHeaders = new Dictionary<string, List<HttpHeader>>(StringComparer.OrdinalIgnoreCase);
-            Headers = new ReadOnlyDictionary<string, HttpHeader>(headers);
-            NonUniqueHeaders = new ReadOnlyDictionary<string, List<HttpHeader>>(nonUniqueHeaders);
+            Headers = new Dictionary<string, HttpHeader>(headers);
+            NonUniqueHeaders = new Dictionary<string, List<HttpHeader>>(nonUniqueHeaders);
         }
 
         /// <summary>
         ///     Unique Request header collection.
         /// </summary>
-        public ReadOnlyDictionary<string, HttpHeader> Headers { get; }
+        public IDictionary<string, HttpHeader> Headers { get; }
 
         /// <summary>
         ///     Non Unique headers.
         /// </summary>
-        public ReadOnlyDictionary<string, List<HttpHeader>> NonUniqueHeaders { get; }
+        public IDictionary<string, List<HttpHeader>> NonUniqueHeaders { get; }
 
         /// <summary>
         ///     Returns an enumerator that iterates through the collection.

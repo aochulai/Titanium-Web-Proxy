@@ -398,7 +398,7 @@ namespace Titanium.Web.Proxy.EventArguments
         /// </summary>
         /// <param name="cancellationToken">Optional cancellation token for this async task.</param>
         /// <returns>The body as bytes.</returns>
-        public async Task<byte[]> GetRequestBody(CancellationToken cancellationToken = default)
+        public async Task<byte[]> GetRequestBody(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (!HttpClient.Request.IsBodyRead)
             {
@@ -413,7 +413,7 @@ namespace Titanium.Web.Proxy.EventArguments
         /// </summary>
         /// <param name="cancellationToken">Optional cancellation token for this async task.</param>
         /// <returns>The body as string.</returns>
-        public async Task<string> GetRequestBodyAsString(CancellationToken cancellationToken = default)
+        public async Task<string> GetRequestBodyAsString(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (!HttpClient.Request.IsBodyRead)
             {
@@ -458,7 +458,7 @@ namespace Titanium.Web.Proxy.EventArguments
         /// </summary>
         /// <param name="cancellationToken">Optional cancellation token for this async task.</param>
         /// <returns>The resulting bytes.</returns>
-        public async Task<byte[]> GetResponseBody(CancellationToken cancellationToken = default)
+        public async Task<byte[]> GetResponseBody(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (!HttpClient.Response.IsBodyRead)
             {
@@ -473,7 +473,7 @@ namespace Titanium.Web.Proxy.EventArguments
         /// </summary>
         /// <param name="cancellationToken">Optional cancellation token for this async task.</param>
         /// <returns>The string body.</returns>
-        public async Task<string> GetResponseBodyAsString(CancellationToken cancellationToken = default)
+        public async Task<string> GetResponseBodyAsString(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (!HttpClient.Response.IsBodyRead)
             {

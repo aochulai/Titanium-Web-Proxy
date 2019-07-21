@@ -120,10 +120,10 @@ namespace Titanium.Web.Proxy.Helpers
             var receiveRelay =
                 serverStream.CopyToAsync(clientStream, onDataReceive, bufferPool, bufferSize, cancellationTokenSource.Token);
 
-            await Task.WhenAny(sendRelay, receiveRelay);
+            await TaskHelper.WhenAny(sendRelay, receiveRelay);
             cancellationTokenSource.Cancel();
 
-            await Task.WhenAll(sendRelay, receiveRelay);
+            await TaskHelper.WhenAll(sendRelay, receiveRelay);
         }
 
         /// <summary>

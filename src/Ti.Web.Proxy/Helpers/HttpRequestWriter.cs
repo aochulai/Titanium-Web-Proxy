@@ -21,7 +21,7 @@ namespace Titanium.Web.Proxy.Helpers
         /// <param name="cancellationToken">Optional cancellation token for this async task.</param>
         /// <returns></returns>
         internal async Task WriteRequestAsync(Request request, bool flush = true,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             await WriteLineAsync(Request.CreateRequestLine(request.Method, request.RequestUriString, request.HttpVersion),
                 cancellationToken);

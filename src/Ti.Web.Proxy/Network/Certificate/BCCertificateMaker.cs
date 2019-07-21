@@ -246,7 +246,7 @@ namespace Titanium.Web.Proxy.Network.Certificate
         /// <returns>X509Certificate2.</returns>
         private X509Certificate2 makeCertificateInternal(string subject, bool isRoot,
             bool switchToMtaIfNeeded, X509Certificate2 signingCert = null,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default(CancellationToken))
         {
 #if NET45
             if (switchToMtaIfNeeded && Thread.CurrentThread.GetApartmentState() != ApartmentState.MTA)

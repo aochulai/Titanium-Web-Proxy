@@ -39,7 +39,7 @@ namespace Titanium.Web.Proxy.Network.Tcp
         internal TcpConnectionFactory(ProxyServer server)
         {
             this.Server = server;
-            Task.Run(async () => await clearOutdatedConnections());
+            Task.Factory.StartNew(async () => await clearOutdatedConnections());
         }
 
         internal ProxyServer Server { get; }
@@ -82,7 +82,7 @@ namespace Titanium.Web.Proxy.Network.Tcp
             SslApplicationProtocol applicationProtocol)
         {
             List<SslApplicationProtocol> applicationProtocols = null;
-            if (applicationProtocol != default)
+            if (applicationProtocol != default(SslApplicationProtocol))
             {
                 applicationProtocols = new List<SslApplicationProtocol> { applicationProtocol };
             }
@@ -118,7 +118,7 @@ namespace Titanium.Web.Proxy.Network.Tcp
             SslApplicationProtocol applicationProtocol, bool noCache, CancellationToken cancellationToken)
         {
             List<SslApplicationProtocol> applicationProtocols = null;
-            if (applicationProtocol != default)
+            if (applicationProtocol != default(SslApplicationProtocol))
             {
                 applicationProtocols = new List<SslApplicationProtocol> { applicationProtocol };
             }
@@ -265,7 +265,7 @@ namespace Titanium.Web.Proxy.Network.Tcp
             TcpClient tcpClient = null;
             CustomBufferedStream stream = null;
 
-            SslApplicationProtocol negotiatedApplicationProtocol = default;
+            SslApplicationProtocol negotiatedApplicationProtocol = default(SslApplicationProtocol);
 
             try
             {
@@ -285,8 +285,7 @@ namespace Titanium.Web.Proxy.Network.Tcp
 
                 var hostname = useUpstreamProxy ? externalProxy.HostName : remoteHostName;
                 var port = useUpstreamProxy ? externalProxy.Port : remotePort;
-
-                var ipAddresses = await Dns.GetHostAddressesAsync(hostname);
+                var ipAddresses = await Task.Factory.StartNew(() => Dns.GetHostAddresses(hostname), cancellationToken);
                 if (ipAddresses == null || ipAddresses.Length == 0)
                 {
                     throw new Exception($"Could not resolve the hostname {hostname}");
@@ -426,7 +425,7 @@ namespace Titanium.Web.Proxy.Network.Tcp
 
             try
             {
-                await @lock.WaitAsync();
+                await Task.Factory.StartNew(() => @lock.Wait());
 
                 while (true)
                 {
@@ -506,7 +505,7 @@ namespace Titanium.Web.Proxy.Network.Tcp
 
                     try
                     {
-                        await @lock.WaitAsync();
+                        await Task.Factory.StartNew(() => @lock.Wait());
 
                         //clear empty queues
                         var emptyKeys = cache.Where(x => x.Value.Count == 0).Select(x => x.Key).ToList();
@@ -535,7 +534,7 @@ namespace Titanium.Web.Proxy.Network.Tcp
                 finally
                 {
                     //cleanup every 3 seconds by default
-                    await Task.Delay(1000 * 3);
+                    await TaskHelper.Delay(1000 * 3);
                 }
 
             }

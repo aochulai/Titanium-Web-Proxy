@@ -34,12 +34,12 @@ namespace Titanium.Web.Proxy.Helpers
         /// </summary>
         /// <param name="cancellationToken">Optional cancellation token for this async task.</param>
         /// <returns></returns>
-        internal Task WriteLineAsync(CancellationToken cancellationToken = default)
+        internal Task WriteLineAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return WriteAsync(newLine, cancellationToken: cancellationToken);
         }
 
-        internal Task WriteAsync(string value, CancellationToken cancellationToken = default)
+        internal Task WriteAsync(string value, CancellationToken cancellationToken = default(CancellationToken))
         {
             return writeAsyncInternal(value, false, cancellationToken);
         }
@@ -81,7 +81,7 @@ namespace Titanium.Web.Proxy.Helpers
             }
         }
 
-        internal Task WriteLineAsync(string value, CancellationToken cancellationToken = default)
+        internal Task WriteLineAsync(string value, CancellationToken cancellationToken = default(CancellationToken))
         {
             return writeAsyncInternal(value, true, cancellationToken);
         }
@@ -94,7 +94,7 @@ namespace Titanium.Web.Proxy.Helpers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task WriteHeadersAsync(HeaderCollection headers, bool flush = true,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var headerBuilder = new StringBuilder();
             foreach (var header in headers)
@@ -111,7 +111,7 @@ namespace Titanium.Web.Proxy.Helpers
             }
         }
 
-        internal async Task WriteAsync(byte[] data, bool flush = false, CancellationToken cancellationToken = default)
+        internal async Task WriteAsync(byte[] data, bool flush = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await stream.WriteAsync(data, 0, data.Length, cancellationToken);
             if (flush)
@@ -121,7 +121,7 @@ namespace Titanium.Web.Proxy.Helpers
         }
 
         internal async Task WriteAsync(byte[] data, int offset, int count, bool flush,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             await stream.WriteAsync(data, offset, count, cancellationToken);
             if (flush)
@@ -287,7 +287,7 @@ namespace Titanium.Web.Proxy.Helpers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         protected async Task WriteAsync(RequestResponseBase requestResponse, bool flush = true,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var body = requestResponse.CompressBodyAndUpdateContentLength();
             await WriteHeadersAsync(requestResponse.Headers, flush, cancellationToken);

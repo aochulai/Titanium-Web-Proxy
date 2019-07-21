@@ -370,7 +370,7 @@ namespace Titanium.Web.Proxy.Network
 
             if (CertificateEngine == CertificateEngine.DefaultWindows)
             {
-                Task.Run(() => uninstallCertificate(StoreName.My, StoreLocation.CurrentUser, certificate));
+                Task.Factory.StartNew(() => uninstallCertificate(StoreName.My, StoreLocation.CurrentUser, certificate));
             }
 
             return certificate;
@@ -453,7 +453,7 @@ namespace Titanium.Web.Proxy.Network
             }
 
             // run certificate creation task & add it to pending tasks
-            task = Task.Run(() =>
+            task = Task.Factory.StartNew(() =>
             {
                 var result = CreateCertificate(certificateName, false);
                 if (result != null)
@@ -495,7 +495,7 @@ namespace Titanium.Web.Proxy.Network
                 // after a minute come back to check for outdated certificates in cache
                 try
                 {
-                    await Task.Delay(1000 * 60, cancellationToken);
+                    await TaskHelper.Delay(1000 * 60, cancellationToken);
                 }
                 catch (TaskCanceledException)
                 {

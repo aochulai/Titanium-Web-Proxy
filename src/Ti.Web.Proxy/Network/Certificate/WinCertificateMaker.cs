@@ -82,11 +82,11 @@ namespace Titanium.Web.Proxy.Network.Certificate
 
         private X509Certificate2 makeCertificate(string sSubjectCN, bool isRoot,
             bool switchToMTAIfNeeded, X509Certificate2 signingCert = null,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             if (switchToMTAIfNeeded && Thread.CurrentThread.GetApartmentState() != ApartmentState.MTA)
             {
-                return Task.Run(() => makeCertificate(sSubjectCN, isRoot, false, signingCert),
+                return Task.Factory.StartNew(() => makeCertificate(sSubjectCN, isRoot, false, signingCert),
                     cancellationToken).Result;
             }
 
